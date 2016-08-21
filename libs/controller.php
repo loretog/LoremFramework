@@ -1,58 +1,46 @@
-<?php 
+<?php
 
-	abstract class Controller extends Database {
-
-		protected $Registry;
-		public $Router;
-
-		abstract protected function index();
-		abstract protected function _init();
-
-		public function __construct( $router ) {
-			$this->Router = $router;
-			parent::__construct();			
-		}
-		public function set( $key, $val ) {
-			$this->Registry[ $key ] = $val;
-		}
-
-		/*
-		 * Loads the content for the method
-		 */
-		public function render( $t ) {
-			/*
-			 * Load the variables!
-			 */
-			if( isset( $this->Registry ) && count( $this->Registry ) > 0 ) {
-				foreach( $this->Registry as $key => $val ) {
-					$$key = $val;
-				}
-			}
-
-			/*
-			 * Get the content of the view or the method
-			 */
-			$THE_VIEW = "";
-			if( file_exists( "views/" . $this->Router->class_name . "/" . $this->Router->method_name . ".php" ) ) {
-				ob_start();
-				include "views/" . $this->Router->class_name . "/" . $this->Router->method_name . ".php";
-				$THE_VIEW = ob_get_clean();
-			}
-
-			$THE_MESSAGE = "";
-			if( isset( $_SESSION[ 'message' ] ) && ! empty( $_SESSION[ 'message' ] ) ) {
-				$THE_MESSAGE = "<div class='alert alert-{$_SESSION[ 'message' ][ 0 ]}' role='alert'>{$_SESSION[ 'message' ][ 1 ]}</div>";
-			}
-
-			/*
-			 * Load the template
-			 */
-			require_once 'templates/' . $t . '_template.php';
-		}
-		public function error_404() {
-			echo "Page not found";
-		}
-		public function redirect( $url = '' ) {
-			header( "Location: " . ROOT_URL . "/$url" ); exit;
-		}
+Abstract Class Controller extends Lorem
+{
+	public $registry;
+	public $db;
+	public $template;
+	public function __construct(&$registry) {
+		$this->registry = $registry;		
+		$this->db = $registry->db;
+		$this->template = $registry->template;
 	}
+	public function getReg() {
+		return $this->registry;
+	}
+	public function page404() { 
+		//$this->template->render('page404'); 
+	}
+	public function login() {
+		echo $this->registry->controller;
+		if(!empty($_POST)) {
+			$username = $_POST['Username'];
+			$password = $_POST['Password'];
+			$admins = $this->db->query("select * from admins where username='$username' and password='" . md5($password) . "'");			
+			if($admins->num_rows) {
+				$admin = $admins->fetch_object();
+        $_SESSION['admin_id'] = $admin->id;
+				$_SESSION['admin'] = $username;	
+				$_SESSION['admin_role'] = $admin->group_id;	
+				header("Location: " . DIR . "/");
+				exit;
+			} else {
+				$_SESSION['message'] = 'Invalid Login. User not found or Username and Password does not match.';
+				header("Location: " . DIR . "/home/login");
+				exit;
+			}
+		} else {
+			//$this->template->render('login');
+		}		
+	}
+	public function logout() {
+		session_destroy();
+		header("Location: " . DIR . "/");
+	}
+	Abstract function index();
+}
