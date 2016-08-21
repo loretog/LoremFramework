@@ -47,7 +47,9 @@
 			/*
 			 * Load the template
 			 */
-			require_once 'templates/' . $t . '_template.php';
+			$template_url = 'templates/' . $t . '_template.php';
+			define( 'TEMPLATE_URL', dirname( ROOT_URL . '/' . $template_url ) );			
+			require_once $template_url;
 		}
 		public function error_404() {
 			echo "Page not found";
