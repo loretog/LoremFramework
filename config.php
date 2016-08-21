@@ -4,3 +4,5 @@
 	define( 'DBUSER', 'root' );
 	define( 'DBPASS', '' );
 	define( 'DBNAME', 'bestlayerinc' );
+
+	/*sample*/
