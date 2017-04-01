@@ -35,8 +35,10 @@
 			$THE_VIEW = "";
 			if( file_exists( "views/" . $this->Router->class_name . "/" . $this->Router->method_name . ".php" ) ) {
 				ob_start();
-				include "views/" . $this->Router->class_name . "/" . $this->Router->method_name . ".php";
+				include "views/" . $this->Router->class_name . "/" . $this->Router->method_name . ".php";				
 				$THE_VIEW = ob_get_clean();
+			} else {
+				$THE_VIEW = "View not found!";
 			}
 
 			$THE_MESSAGE = "";
