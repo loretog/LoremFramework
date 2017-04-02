@@ -50,9 +50,16 @@ if( ! defined( 'ACCESS' ) ) die( 'INVALID DIRECT ACCESS' );
 
 			/*
 			 * Load the template
-			 */
-			$template_url = 'templates/' . $t . '_template.php';
-			define( 'TEMPLATE_URL', dirname( ROOT_URL . '/' . $template_url ) );			
+			 */			
+			$fn = explode( "/", $t );
+			if( count( $fn ) == 1 ) {
+				$folder_name = "";
+			} else {
+				$folder_name = $fn[ 0 ];			
+			}
+			$template_url = 'templates/' . $t . '_template.php';			
+			//define( 'TEMPLATE_URL', dirname( ROOT_URL . '/' . $template_url ) );			
+			define( 'TEMPLATE_URL', ROOT_URL . '/templates/' . $folder_name );			
 			require_once $template_url;
 		}
 		public function error_404() {
