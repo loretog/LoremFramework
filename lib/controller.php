@@ -1,5 +1,7 @@
 <?php 
 
+if( ! defined( 'ACCESS' ) ) die( 'INVALID DIRECT ACCESS' );
+
 	abstract class Controller extends Database {
 
 		protected $Registry;

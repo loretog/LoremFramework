@@ -1,5 +1,7 @@
 <?php
 
+if( ! defined( 'ACCESS' ) ) die( 'INVALID DIRECT ACCESS' );
+
 	class Router {
 
 		private $path;

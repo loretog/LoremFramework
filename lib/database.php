@@ -1,5 +1,7 @@
 <?php
 
+if( ! defined( 'ACCESS' ) ) die( 'INVALID DIRECT ACCESS' );
+
 	class Database extends Mysqli {
 		public function __construct() {
 			@parent::__construct( DBHOST, DBUSER, DBPASS, DBNAME );			

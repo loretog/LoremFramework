@@ -3,6 +3,6 @@
 	define( 'DBHOST', 'localhost' );
 	define( 'DBUSER', 'root' );
 	define( 'DBPASS', '' );
-	define( 'DBNAME', 'bestlayerinc' );
+	define( 'DBNAME', 'mca' );
 
 	/*sample*/
